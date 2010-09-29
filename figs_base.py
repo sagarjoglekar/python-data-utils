@@ -1,3 +1,9 @@
+###########################################################
+#
+# best way to import this is "from utils.figs_base import *"
+# that brings in all of pylab, mean, median etc into importing file (usu. figures.py)
+#
+###########################################################
 from pylab import *
 from stats import *
 
@@ -10,9 +16,6 @@ import itertools
 
 from numpy.core import mean,std
 from numpy.lib import median 
-
-import read_objects as ro
-import long_tail as lt
 
 linestyles = lambda : itertools.cycle(["-","--",":","-."])
 linemarkers = lambda: itertools.cycle(['+', ',', '.','1','2', '3', '4'])
