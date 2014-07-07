@@ -6,7 +6,7 @@ Easiest to import as
     
 Or you might want to write a figs.py with your figure code. In this, use
 
-   from figs_base import *
+    from figs_base import *
 
 This is easier as several of the figs_base functions are intended to be called from other functions which compute specific figures for specific needs...
 
