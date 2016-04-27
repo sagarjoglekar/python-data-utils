@@ -4,7 +4,7 @@
 # that brings in all of pylab, mean, median etc into importing file (usu. figures.py)
 #
 ###########################################################
-from pylab import *
+from matplotlib import *
 from stats import *
 
 import math
@@ -15,7 +15,7 @@ import collections
 import itertools
 
 from numpy.core import mean,std
-from numpy.lib import median 
+from numpy.lib import median
 
 linestyles = lambda : itertools.cycle(["-","--",":","-."])
 linemarkers = lambda: itertools.cycle(['+', ',', '.','1','2', '3', '4'])
@@ -24,7 +24,7 @@ no_lstyles = no_lmarkers = itertools.cycle([""])
 def write_line(filnam,datapts,xlbl="X",ylbl="Y",comment=None):
     import csv
     #convert from [xvec,yvec] vec to [(xval,yval)...]
-    if len(datapts) == 2: datapts = zip(*datapts) 
+    if len(datapts) == 2: datapts = zip(*datapts)
     with open(filnam,'wb') as f:
         w = csv.writer(f)
         if comment: w.writerow(["#" + comment,"N=%s points" % len(datapts)])
@@ -50,7 +50,7 @@ def fit_exponential(samples):
     f = r.fitdistr(samples,'exponential')
     rat = f['estimate']['rate']
     qp = r.qexp(r.ppoints(samples),rate=rat)
-    
+
     return qp, rat
 
 def qq_plot(samples,qp):
@@ -58,7 +58,7 @@ def qq_plot(samples,qp):
     lim = max(samples)
     setup_fig("predicted","actual")
     plot([0,lim],[0,lim],c='k')
-    
+
     x_y = zip(qp,samples)
     x_y = filter(lambda xy: xy[0] < lim and xy[1] < lim, x_y)
     step_siz = len(x_y)/50000 #take at most 50k points!
@@ -67,7 +67,7 @@ def qq_plot(samples,qp):
     x,y = zip(*x_y)
 
     x,y = zip(*filter(lambda xy: xy[0] < lim and xy[1] < lim, x_y))
-    
+
     plot(x,y,'k,')
     xlim(0,lim); ylim(0,lim)
 
@@ -77,7 +77,7 @@ def qq_plot_labels(samples,qp,lgnd,lstyle, hold=False):
     if not hold:
         setup_fig("predicted","actual")
         plot([0,lim],[0,lim],c='k')
-    
+
     x_y = zip(qp,samples)
     x_y = filter(lambda xy: xy[0] < lim and xy[1] < lim, x_y)
     step_siz = len(x_y)/50000
@@ -137,7 +137,7 @@ def figsize(col_width_pt=252.0):
     """Get fig_width_pt from LaTeX using \showthe\columnwidth"""
     fig_width_pt=col_width_pt
     inches_per_pt = 1.0/72.27               # Convert pt to inches
-    golden_mean = (sqrt(5)-1.0)/2.0         # Aesthetic ratio
+    golden_mean = (math.sqrt(5)-1.0)/2.0         # Aesthetic ratio
     fig_width = fig_width_pt*inches_per_pt  # width in inches
     fig_height =fig_width*golden_mean       # height in inches
     fig_size = [fig_width,fig_height]
