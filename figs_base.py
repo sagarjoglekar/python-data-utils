@@ -16,6 +16,8 @@ import itertools
 
 from numpy.core import mean,std
 from numpy.lib import median
+import rpy2.robjects as r
+from rpy2.robjects import *
 
 linestyles = lambda : itertools.cycle(["-","--",":","-."])
 linemarkers = lambda: itertools.cycle(['+', ',', '.','1','2', '3', '4'])
@@ -44,8 +46,7 @@ def read_line(filnam):
         return x,y
 
 def fit_exponential(samples):
-    from rpy import r
-    samples = [double(n) for n in samples]#because rpy does not like longs!
+    samples = [float(n) for n in samples]#because rpy does not like longs!
     r.library('MASS')
     f = r.fitdistr(samples,'exponential')
     rat = f['estimate']['rate']
@@ -88,7 +89,6 @@ def qq_plot_labels(samples,qp,lgnd,lstyle, hold=False):
     xlim(0,lim); ylim(0,lim)
 
 def fit_poisson(samples):
-    from rpy import r
     r.library('MASS')
     f = r.fitdistr(samples,'poisson')
     l = f['estimate']['lambda'] #predicted mean
@@ -96,7 +96,6 @@ def fit_poisson(samples):
     return qp,l
 
 def fit_nbinom(samples):
-    from rpy import r
     r.library('MASS')
     f = r.fitdistr(samples,'negative binomial')
     s,m = f['estimate']['size'],f['estimate']['mu']
@@ -104,7 +103,6 @@ def fit_nbinom(samples):
     return qp,s,m
 
 def fit_gamma(samples):
-    from rpy import r
     samples = [double(n) for n in samples if n > 0]#because rpy does not like longs!
     r.library('MASS')
     f = r.fitdistr(samples,'gamma')
@@ -113,7 +111,6 @@ def fit_gamma(samples):
     return qp,shape,rat
 
 def fit_weibull(samples):
-    from rpy import r
     #samples = [double(n) for n in samples if n > 0]#because rpy does not like longs!
     r.library('MASS')
     f = r.fitdistr(samples,'weibull')
@@ -146,7 +143,7 @@ params = {'backend': 'pdf',
 #          'text.usetex': True,
           'font.family':'font.sans-serif',
           'axes.labelsize': 9,
-          'text.fontsize': 9,
+          'font.size': 9,
           'legend.fontsize': 9,
           'xtick.labelsize': 8,
           'ytick.labelsize': 8,

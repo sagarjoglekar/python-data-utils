@@ -2,11 +2,13 @@ import unittest
 from figs_base import *
 from tests import *
 import os
+import numpy as np
 
 class testfigsbase(unittest.TestCase):
+    points = [(1,2),(3,4),(5,6)]
 
     def test_read_write_line(self):
-        write_line("test.csv",[(1,2),(3,4),(5,6)],xlbl="X",ylbl="Y",comment=None)
+        write_line("test.csv", self.points ,xlbl="X",ylbl="Y",comment=None)
         if os.path.exists("test.csv"):
             self.assertTrue(True)
             x,y = read_line("test.csv")
@@ -18,9 +20,6 @@ class testfigsbase(unittest.TestCase):
 
         else:
             self.assertTrue(False)
-
-
-
 
 if __name__ == '__main__':
     unittest.main()
